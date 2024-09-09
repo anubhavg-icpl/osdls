@@ -82,7 +82,7 @@ function cert_generateAdmincertificate() {
     common_logger -d "Converting Admin private key to PKCS8 format."
     cert_executeAndValidate "openssl pkcs8 -inform PEM -outform PEM -in ${cert_tmp_path}/admin-key-temp.pem -topk8 -nocrypt -v1 PBE-SHA1-3DES -out ${cert_tmp_path}/admin-key.pem"
     common_logger -d "Generating Admin CSR."
-    cert_executeAndValidate "openssl req -new -key ${cert_tmp_path}/admin-key.pem -out ${cert_tmp_path}/admin.csr -batch -subj '/C=US/L=California/O=Infopercept/OU=Infopercept/CN=admin'"
+    cert_executeAndValidate "openssl req -new -key ${cert_tmp_path}/admin-key.pem -out ${cert_tmp_path}/admin.csr -batch -subj '/C=US/L=California/O=Openarmor/OU=Openarmor/CN=admin'"
     common_logger -d "Creating Admin certificate."
     cert_executeAndValidate "openssl x509 -days 3650 -req -in ${cert_tmp_path}/admin.csr -CA ${cert_tmp_path}/root-ca.pem -CAkey ${cert_tmp_path}/root-ca.key -CAcreateserial -sha256 -out ${cert_tmp_path}/admin.pem"
 
@@ -101,8 +101,8 @@ function cert_generateCertificateconfiguration() {
         [req_distinguished_name]
         C = US
         L = California
-        O = Infopercept
-        OU = Infopercept
+        O = Openarmor
+        OU = Openarmor
         CN = cname
 
         [ v3_req ]
@@ -199,7 +199,7 @@ function cert_generateDashboardcertificates() {
 function cert_generateRootCAcertificate() {
 
     common_logger "Generating the root certificate."
-    cert_executeAndValidate "openssl req -x509 -new -nodes -newkey rsa:2048 -keyout ${cert_tmp_path}/root-ca.key -out ${cert_tmp_path}/root-ca.pem -batch -subj '/OU=Infopercept/O=Infopercept/L=California/' -days 3650"
+    cert_executeAndValidate "openssl req -x509 -new -nodes -newkey rsa:2048 -keyout ${cert_tmp_path}/root-ca.key -out ${cert_tmp_path}/root-ca.pem -batch -subj '/OU=Openarmor/O=Openarmor/L=California/' -days 3650"
 
 }
 function cert_parseYaml() {
